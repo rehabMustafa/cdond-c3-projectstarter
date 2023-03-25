@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  slack: circleci/slack@4.12.1
 jobs:
   build-frontend:
     docker:
@@ -104,6 +106,27 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-scan
+  notify:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - slack/notify:
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "*This is a text notification*",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }
+          event: always
 
 workflows:
   default:
@@ -118,3 +141,7 @@ workflows:
           requires: [build-frontend]
       - scan-backend:
           requires: [build-backend]
+  send-notification:
+    jobs:
+      - notify:
+          context: SlackContext
