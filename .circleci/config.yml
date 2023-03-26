@@ -192,7 +192,8 @@ jobs:
             apk add gzip
             apk add python curl
             curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-            unzip awscli-bundle.zip ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+            unzip awscli-bundle.zip
+            ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
       - run:
           name: Configure server
           command: |
