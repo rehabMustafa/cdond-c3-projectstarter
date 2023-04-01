@@ -218,7 +218,7 @@ jobs:
   #     - destroy-environment
   # deploy-frontend:
   #   docker:
-  #     - image: amazon/aws-cli
+  #     - image: mareimorsy/aws-node
   #   steps:
   #     - checkout
   #     - restore_cache:
