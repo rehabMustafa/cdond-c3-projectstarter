@@ -225,16 +225,19 @@ jobs:
   #         keys: [frontend-build]
   #     - attach_workspace:
   #         at: ~/
-  #     - run:
-  #         name: Install dependencies
-  #         command: |
-  #           # your code here
+  #     # - run:
+  #     #     name: Install dependencies
+  #     #     command: |
+  #     #       # your code here
   #     - run:
   #         name: Get backend url
   #         command: |
-  #           # your code here
+  #           export BACKEND_IP=$(aws ec2 describe-instances...............)
   #           export API_URL="http://${BACKEND_IP}:3030"
-  #           echo "${API_URL}"
+  #           echo "API_URL = ${API_URL}"
+  #           echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
+  #           cat frontend/.env
+          
   #     - run:
   #         name: Deploy frontend objects
   #         command: |
