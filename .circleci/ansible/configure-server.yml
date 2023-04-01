@@ -16,7 +16,7 @@
     - name: wait 600 seconds for target connection to become reachable/usable.
       wait_for:
         host: "{{ inventory_hostname }}"
-        state: "started"
+        state: "running"
         timeout: 600
         delay: 10
 
