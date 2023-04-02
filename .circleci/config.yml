@@ -195,7 +195,7 @@ jobs:
       - destroy-environment    
   # run-migrations:
   #   docker:
-  #     - image: circleci/node:13.8.0
+  #     - image:  mareimorsy/aws-node
   #   steps:
   #     - checkout
   #     - restore_cache:
