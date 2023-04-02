@@ -12,17 +12,17 @@ commands:
             aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
             aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
   notify_on_failure:
-      steps:
-        - slack/notify:
-            event: fail
-            channel: $SLACK_DEFAULT_CHANNEL
-            template: basic_fail_1
+    steps:
+      - slack/notify:
+          event: fail
+          channel: $SLACK_DEFAULT_CHANNEL
+          template: basic_fail_1
   notify_on_success:
-      steps:
-        - slack/notify:
-            event: pass
-            channel: $SLACK_DEFAULT_CHANNEL
-            template: success_tagged_deployment_1
+    steps:
+      - slack/notify:
+          event: pass
+          channel: $SLACK_DEFAULT_CHANNEL
+          template: success_tagged_deployment_1
 
 
   revert-migrations:
@@ -63,21 +63,21 @@ jobs:
           paths: [frontend/node_modules]
           key: frontend-build
   build-backend:
-      docker:
-        - image: circleci/node:13.8.0
-      steps:
-        - checkout
-        - restore_cache:
-            keys: [backend-build]
-        - run:
-            name: Back-end build
-            command: |
-              cd backend
-              npm install
-              npm run build
-        - save_cache:
-            paths: [backend/node_modules]
-            key: backend-build
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [backend-build]
+      - run:
+          name: Back-end build
+          command: |
+            cd backend
+            npm install
+            npm run build
+      - save_cache:
+          paths: [backend/node_modules]
+          key: backend-build
   test-frontend:
     docker:
       - image: circleci/node:13.8.0
@@ -96,9 +96,9 @@ jobs:
           key: frontend-test
                 
   test-backend:
-   docker:
+    docker:
       - image: circleci/node:13.8.0
-   steps:
+    steps:
       - checkout
       - restore_cache:
           keys: [backend-test]
@@ -319,8 +319,7 @@ jobs:
             ansible-playbook -i inventory.txt deploy-backend.yml
       - destroy-environment
       - revert-migrations
-              
-
+    
 workflows:
   default:
     jobs:
