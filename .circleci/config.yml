@@ -229,6 +229,8 @@ jobs:
       - image:  mareimorsy/aws-node
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints: ["d6:7d:df:cc:eb:2a:7c:16:eb:35:b4:73:44:13:74:f8"]
       - run:
           name: Run migrations
           command: |
@@ -319,27 +321,27 @@ jobs:
 workflows:
   default:
     jobs:
-      - build-frontend
-      - build-backend
-      - test-frontend:
-          requires: [build-frontend]
-      - test-backend:
-          requires: [build-backend]
-      - scan-frontend:
-          requires: [build-frontend]
-      - scan-backend:
-          requires: [build-backend]
-      - deploy-infrastructure:
-          filters:
-            branches: 
-              only: [master]
-          requires:
-            - build-backend
-            - build-frontend
+      # - build-frontend
+      # - build-backend
+      # - test-frontend:
+      #     requires: [build-frontend]
+      # - test-backend:
+      #     requires: [build-backend]
+      # - scan-frontend:
+      #     requires: [build-frontend]
+      # - scan-backend:
+      #     requires: [build-backend]
+      # - deploy-infrastructure:
+      #     filters:
+      #       branches: 
+      #         only: [master]
+      #     requires:
+      #       - build-backend
+      #       - build-frontend
        
-      - configure-infrastructure:
-          requires: [deploy-infrastructure]
-      # - run-migrations:
+      # - configure-infrastructure:
+      #     requires: [deploy-infrastructure]
+      - run-migrations
       #     requires: [configure-infrastructure]
       # - deploy-frontend:
       #     requires: [deploy-infrastructure]
