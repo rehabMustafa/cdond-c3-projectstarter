@@ -341,7 +341,7 @@ workflows:
       - deploy-infrastructure:
           filters:
             branches: 
-              only: [main]
+              only: [master]
           # requires:
           #   - build-backend
           #   - build-frontend
