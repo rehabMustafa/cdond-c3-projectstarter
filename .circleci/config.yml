@@ -295,8 +295,8 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-            export TYPEORM_HOST=${TYPEORM_HOST}
-            echo $TYPEORM_HOST >> .circleci/ansible/inventory.txt
+            export TYPEORM_EC2HOST=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+            echo $TYPEORM_EC2HOST >> .circleci/ansible/inventory.txt
             cd backend
             npm i
             npm run build
