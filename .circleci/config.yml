@@ -313,8 +313,8 @@ jobs:
             ls ../.circleci/ansible/roles/deploy/
             cd ../.circleci/ansible
             ansible-playbook -i inventory.txt deploy-backend.yml
-      - destroy_environment
-      - revert-migrations
+      # - destroy_environment
+      # - revert-migrations
     
 workflows:
   default:
