@@ -212,7 +212,7 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
 #       # Here's where you will add some code to rollback on failure      
-      - destroy_environment
+      # - destroy_environment
   configure-infrastructure:
     docker:
       - image: mareimorsy/aws-node
@@ -232,7 +232,7 @@ jobs:
             cat inventory.txt
             # ansible-playbook -i inventory.txt configure-server.yml -vv
             ansible-playbook -i inventory.txt prometheus-exporter.yml -vv
-      - destroy_environment    
+      # - destroy_environment    
   run-migrations:
     docker:
       - image:  mareimorsy/aws-node
@@ -348,12 +348,12 @@ workflows:
        
       - configure-infrastructure:
           requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure-infrastructure]
-      - deploy-frontend:
-          requires: [deploy-infrastructure]
-      - deploy-backend:
-          requires: [run-migrations]
+      # - run-migrations:
+      #     requires: [configure-infrastructure]
+      # - deploy-frontend:
+      #     requires: [deploy-infrastructure]
+      # - deploy-backend:
+      #     requires: [run-migrations]
   # send-notification:
     #jobs:
       #- notify:
