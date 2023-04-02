@@ -315,6 +315,28 @@ jobs:
             ansible-playbook -i inventory.txt deploy-backend.yml
       # - destroy_environment
       # - revert-migrations
+  smoke-test:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      # - checkout
+      - run:
+          name: Backend smoke test.
+          command: |
+            export BACKEND_PUBLIC_IP=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+            
+            # URL="http://$BACKEND_PUBLIC_IP:3030/api/status"
+            URL="http://g00gle.com"
+            if curl -s --head ${URL}
+            then
+              echo "It worked!"
+              exit 0
+            else
+              echo "Rolling Back"
+              exit 1
+            fi
+      - notify_on_failure
+      # - destroy_environment
     
 workflows:
   default:
@@ -343,9 +365,7 @@ workflows:
       #     requires: [configure-infrastructure]
       # - deploy-frontend
       #     requires: [deploy-infrastructure]
-      - deploy-backend
+      # - deploy-backend
       #     requires: [run-migrations]
-  # send-notification:
-    #jobs:
-      #- notify:
-       #   context: SlackContext
+      - smoke-test
+
