@@ -14,7 +14,7 @@ commands:
           when: on_fail
           command: |
             aws cloudformation delete-stack --stack-name backend-<< parameters.Workflow_ID >>
-            # aws s3 rm s3://udapeople-<<parameters.Workflow_ID>> --recursive
+            aws s3 rm s3://udapeople-<<parameters.Workflow_ID>> --recursive
             aws cloudformation delete-stack --stack-name frontend-<< parameters.Workflow_ID >>
   notify_on_failure:
     steps:
@@ -145,28 +145,6 @@ jobs:
             npm audit fix --audit-level=critical --force
             npm audit fix --force
             npm audit --audit-level=critical
-
-  notify:
-    docker:
-      - image: 'cimg/base:stable'
-    steps:
-      - slack/notify:
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "plain_text",
-                      "text": "*This is a text notification*",
-                      "emoji": true
-                    }
-                  ]
-                }
-              ]
-            }
-          event: always
 
   deploy-infrastructure:
     docker:
@@ -341,12 +319,14 @@ jobs:
             echo ${URL} 
             if curl -s ${URL} | grep "Welcome"
             then
-              return 0
+              exit 1
             else
-              return 1
+              exit 1
             fi
-      - notify_on_failure
-      # - destroy_environment
+      # - notify_on_failure
+      - destroy_environment
+      - revert-migrations
+
     
 workflows:
   default:
