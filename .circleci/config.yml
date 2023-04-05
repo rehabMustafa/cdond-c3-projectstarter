@@ -271,8 +271,9 @@ jobs:
             ls ../.circleci/ansible/roles/deploy/
             cd ../.circleci/ansible
             ansible-playbook -i inventory.txt deploy-backend.yml
-      - destroy_environment
       - revert-migrations
+      - destroy_environment
+   
   smoke-test:
     docker:
       - image: amazon/aws-cli
@@ -304,8 +305,9 @@ jobs:
               exit 1
             fi
       # - notify_on_failure
-      - destroy_environment
       - revert-migrations
+      - destroy_environment
+
   cloudfront-update:
     docker:
       - image: mareimorsy/aws-node
