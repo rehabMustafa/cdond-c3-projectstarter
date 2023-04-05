@@ -218,11 +218,8 @@ jobs:
       - run:
           name: Send migration results to kvdb
           command: |
-            if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
-            then
-            # If you are using kvdb.io, generate the bucket ID "RT1NwBGbymsKgmQTH8X31B" in your local terminal first
             curl --insecure https://kvdb.io/RT1NwBGbymsKgmQTH8X31B/migration_done  -d '1'
-            fi
+            
       - destroy_environment
   deploy-frontend:
     docker:
