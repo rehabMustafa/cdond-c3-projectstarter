@@ -44,7 +44,7 @@ commands:
             SUCCESS=$(curl --insecure  https://kvdb.io/RT1NwBGbymsKgmQTH8X31B/migration_done)
             echo "$SUCCESS"
             # Logic for reverting the database state
-            if (( $SUCCESS == 1 ));
+            if [[ "${SUCCESS}" == "1" ]]
             then
               cd ~/project/backend
               npm install
