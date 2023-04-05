@@ -300,7 +300,7 @@ jobs:
             echo ${URL} 
             if curl -s ${URL} | grep "Welcome"
             then
-              exit 1
+              exit 0
             else
               exit 1
             fi
@@ -402,16 +402,16 @@ workflows:
           requires: [run-migrations]
       - smoke-test:
           requires: [deploy-frontend, deploy-backend]
-      # - cloudfront-update:
-      #     filters:
-      #       branches: 
-      #         only: [master]
-      #     requires: [smoke-test]
-      # - cleanup:
-      #     filters:
-      #       branches: 
-      #         only: [master]
-      #     requires: [cloudfront-update]
+      - cloudfront-update:
+          filters:
+            branches: 
+              only: [master]
+          requires: [smoke-test]
+      - cleanup:
+          filters:
+            branches: 
+              only: [master]
+          requires: [cloudfront-update]
       
       #   # - configure-exporter
 
