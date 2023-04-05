@@ -48,7 +48,7 @@ commands:
             then
               cd ~/project/backend
               npm install
-              npm run migration:revert
+              npm run migrations:revert
             fi
 jobs:
   build-frontend:
@@ -213,7 +213,7 @@ jobs:
             export TYPEORM_HOST=${TYPEORM_HOST}
             cd backend
             npm install
-            npm run premigrations
+            # npm run premigrations
             npm run migrations > migrations_dump.txt
       - run:
           name: Send migration results to kvdb
